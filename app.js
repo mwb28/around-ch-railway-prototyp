@@ -14,6 +14,13 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+const cors = require("cors");
+const corsOptions = {
+  origin: "https://around-ch-railway-prototyp-production.up.railway.app", // Ersetze mit deiner Frontend-URL
+  optionsSuccessStatus: 200, // Einige Browser (z.B. IE) benötigen einen 200er Status
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.static("./frontend"));
 
