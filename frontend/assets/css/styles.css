@@ -57,14 +57,18 @@ h2 {
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-  width: 300px;
-  margin: auto;
+  padding: 2em;
+  width: 90%;
+  max-width: 500px;
+  margin-left: 1em;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 [type="checkbox"] {
   display: flex;
   vertical-align: middle;
 }
+
 
 .input-group {
   margin-bottom: 1rem;
