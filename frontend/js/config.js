@@ -1,3 +1,3 @@
 window.backendUrl = window.location.origin.includes("localhost")
   ? "http://localhost:5000"
-  : "https://XXXXX.com";
+  : "around-ch-railway-prototyp-production.up.railway.app";
