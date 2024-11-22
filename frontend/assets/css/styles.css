@@ -737,14 +737,8 @@ h2 {
     padding: 6px;
   }
 
-  .login-card,
-  .changepw-card,
-  .activity-card,
-  .class-registration-card {
-    height: 100vh; 
-    padding: 3em; 
-    margin: 0.5em; 
-  }
+  
+
 }
 
 
