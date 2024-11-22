@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(express.static("../frontend"));
+app.use(express.static("./frontend"));
 
 app.use("/api/v1/auth", authRoutes); // Authentication routes (register/login)
 app.use("/api/v1/challenges", challengeRoutes);
