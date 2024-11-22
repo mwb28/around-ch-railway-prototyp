@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aktive Challenges</title>
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="../js/config.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo-container">
+          <a href="../index.html"
+            ><img src="../assets/images/logo_small.png" alt="Logo" class="logo"
+          /></a>
+        </div>
+        <span id="usernameDisplay" style="margin-right: 10px"></span>
+        <a
+          href="./views/login.html"
+          class="login-button"
+          id="loginButton"
+          style="text-decoration: none"
+          >Einloggen</a
+        >
+      </header>
+
+      <main>
+        <section class="challenges-large-view">
+          <h2>Aktive Challenge einzeln:</h2>
+          <div class="challenge-large-card">
+            <div class="challenge-details"></div>
+
+            <div
+              class="map-preview-large"
+              id="map"
+              style="height: 500px; width: 100%; border-radius: 10px"
+            ></div>
+            <div class="user-input"></div>
+          </div>
+          <div class="button-container-end">
+          <div class="buttons">
+            <a
+              href="../index.html"
+              class="back-button"
+              style="text-decoration: none"
+              >Zurück</a
+            >
+          </div>
+          <div class="buttons">
+            <a href="#" id="dashboardButton" class="dashboard-button"
+              >Zum Dashboard</a
+            >
+          </div>
+        </section>
+      </main>
+      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7.1.0/turf.min.js"></script>
+
+      <script src="../js/challengeDetails.js"></script>
+      <script src="../js/auth.js"></script>
+      <script src="../js/scrollPostition.js"></script>
+    </div>
+  </body>
+</html>

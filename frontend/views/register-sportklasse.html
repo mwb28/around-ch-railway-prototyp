@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <title>Sportklasse Registrieren</title>
+    <script src="../js/config.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo-container">
+          <a href="../index.html"
+            ><img src="../assets/images/logo_small.png" alt="Logo" class="logo"
+          /></a>
+        </div> <span id="usernameDisplay" style="margin-right: 10px"></span>
+        <a href="./views/login.html" class="login-button" id="loginButton" style="text-decoration: none">Einloggen</a>
+        </div>
+      </header>
+      <div class="class-registration-card">
+        <h2>Sportklasse Registrieren</h2>
+        <form id="registrationForm" method="POST">
+          <div class="input-group">
+            <label for="className">Name der Sportklasse:</label>
+            <input type="text" id="className" name="className" required />
+          </div>
+          <div class="input-group">
+            <label for="classYear">Jahrgang:</label>
+            <input
+              type="number"
+              id="classYear"
+              name="classYear"
+              required
+              min="2000"
+              max="2100"
+            />
+          </div>
+          <button
+            type="button"
+            class="submit-button"
+            onclick="submitRegistration()"
+          >
+            Registrieren
+          </button>
+        </form>
+        <div class="login-links">
+          <a href="../views/dashboard.html">Zurück zum Dashboard</a>
+        </div>
+      </div>
+      </div>
+     
+    <script src="../js/classRegistration.js"></script>
+    <script src="../js/auth.js"></script>
+  </body>
+</html>
