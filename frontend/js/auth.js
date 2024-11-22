@@ -146,6 +146,8 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("username");
 
+        localStorage.setItem("logout-event", Date.now());
+
         // Aktualisiere den Login-Status im Header
         updateLoginStatus();
 
@@ -166,6 +168,17 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     }
   }
+
+  window.addEventListener("storage", (event) => {
+    if (event.key === "logout-event") {
+      // Der Benutzer hat sich in einem anderen Tab ausgeloggt
+      console.log("Logout-Event in anderem Tab erkannt.");
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("username");
+      updateLoginStatus();
+      window.location.href = "/index.html"; // Leite zur Startseite weiter
+    }
+  });
 
   // Aktualisiere den Login-Status beim Laden der Seite
   updateLoginStatus();
