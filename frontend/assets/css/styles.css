@@ -111,6 +111,7 @@ h2 {
   cursor: pointer;
   border-radius: 5px;
   text-decoration: none;
+  font-size: 16px;
 }
 .login-links {
   display: flex;
@@ -632,6 +633,7 @@ h2 {
   .buttons {
      /* Die Buttons werden vertikal angeordnet */
     gap: 0.5em;
+    text-align: center;
     
   }
   /* .challenge-table {
