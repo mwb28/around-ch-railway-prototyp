@@ -1,10 +1,10 @@
 require("dotenv").config();
-const pool = require("./db/connect");
+const pool = require("../db/connect");
 
 // routes
-const authRoutes = require("./routes/authRoutes");
-const challengeRoutes = require("./routes/challengeRoutes");
-const userRoutes = require("./routes/userRoutes");
+const authRoutes = require("../routes/authRoutes");
+const challengeRoutes = require("../routes/challengeRoutes");
+const userRoutes = require("../routes/userRoutes");
 
 // express
 
