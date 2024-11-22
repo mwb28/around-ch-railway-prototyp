@@ -1,12 +1,13 @@
-// backend/db.js
+// db/connect.js
 const { Pool } = require("pg");
+require("dotenv").config();
 
+// Verbindung zur Datenbank über die connectionString-Umgebungsvariable
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // notwendig, damit SSL-Verbindung akzeptiert wird (für Railway)
+  },
 });
 
 module.exports = pool;
