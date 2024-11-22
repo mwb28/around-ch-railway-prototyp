@@ -621,6 +621,7 @@ h2 {
     word-wrap: break-word;
     overflow-wrap: break-word;
     box-sizing: border-box;
+    overflow-x: auto;
   }
   .card-content {
     padding: 1em;
