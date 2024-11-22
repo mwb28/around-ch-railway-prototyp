@@ -736,10 +736,15 @@ h2 {
     font-size: 14px;
     padding: 6px;
   }
+  .activity-card {
+    font-size: 1.5rem; 
+    padding: 2.5em; 
+  }
+}
 
   
 
-}
+
 
 
 @media (max-width: 600px) {
