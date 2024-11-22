@@ -630,8 +630,9 @@ h2 {
     word-wrap: break-word;
   }
   .buttons {
-    gap: 1em;
-    box-sizing: border-box;
+     /* Die Buttons werden vertikal angeordnet */
+    gap: 0.5em;
+    
   }
   /* .challenge-table {
     display: block;
@@ -732,3 +733,11 @@ h2 {
     padding: 6px;
   }
 }
+@media (max-width: 600px) {
+  .buttons {
+    display: flex;
+    flex-direction: column; 
+    gap: 0.5em;
+    
+  }
+  }
