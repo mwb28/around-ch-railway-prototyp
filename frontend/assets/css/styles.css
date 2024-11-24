@@ -429,7 +429,7 @@ h2 {
   min-width: 70px;
 }
 
-.participate-button {
+.participate-button .delete-button{
   padding: 0.5em 1em;
   background-color: #3b8ad3;
   color: #ffffff;
