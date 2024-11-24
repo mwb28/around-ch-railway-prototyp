@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Passwort-Reset-Formular
-  const passwordResetForm = document.getElementById("passwordResetForm");
+  const passwordResetForm = document.getElementById("pwResetForm");
 
   if (passwordResetForm) {
     const showPasswordCheckbox = document.getElementById("showPassword");
