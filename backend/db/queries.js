@@ -143,7 +143,6 @@ JOIN
     sportklasse sk_own ON kci.sportkl_id = sk_own.sportkl_id AND sk_own.sportl_id = $1
 WHERE 
     c.abgeschlossen = false
-    AND c.sportl_id = $1
 ORDER BY 
     eigene_sportklasse
 `;

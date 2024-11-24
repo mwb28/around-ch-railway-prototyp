@@ -107,7 +107,13 @@ async function loadStatistics() {
     );
     if (!response.ok) throw new Error("Fehler beim Laden der Statistik");
     const statsArray = await response.json();
+
     const stats = statsArray[0];
+    if (stats.totalmeter == null || stats.totaldauer == null) {
+      document.getElementById("totalKm").textContent = "0 km";
+      document.getElementById("totalHours").textContent = "0 h 0 min";
+      return;
+    }
     const totalKilometer = (parseInt(stats.totalmeter, 10) / 1000).toFixed(3);
     const totalMinuten = parseInt(stats.totaldauer, 10);
     const stunden = Math.floor(totalMinuten / 60);
@@ -116,8 +122,8 @@ async function loadStatistics() {
     document.getElementById(
       "totalHours"
     ).textContent = `${stunden} h ${minuten} min`;
-    console.log("Total Meter: ", stats.totalmeter);
-    console.log("Total Minuten: ", stats.totaldauer);
+    // console.log("Total Meter: ", stats.totalmeter);
+    // console.log("Total Minuten: ", stats.totaldauer);
     // document.getElementById("mySportClasses").textContent =
     //   stats.sportClasses.join(", ");
   } catch (error) {
@@ -133,8 +139,12 @@ async function loadSportClasses() {
     if (!response.ok) throw new Error("Fehler beim Laden der Sportklassen");
 
     const sportClasses = await response.json();
-    console.log("Erhaltene Sportklassen:", sportClasses);
-
+    // console.log("Erhaltene Sportklassen:", sportClasses);
+    if (sportClasses.length === 0) {
+      document.getElementById("mySportClasses").textContent =
+        "Keine Sportklassen gefunden.";
+      return;
+    }
     const classListContainer = document.getElementById("mySportClasses");
     classListContainer.innerHTML = "";
 
@@ -277,6 +287,7 @@ async function joinChallenge(challengeId, classId) {
 
     if (response.ok) {
       alert("Erfolgreich zur Challenge angemeldet!");
+      await loadActiveChallenges();
     } else if (response.status === 409) {
       alert("Diese Sportklasse nimmt bereits an dieser Challenge teil.");
     } else {
