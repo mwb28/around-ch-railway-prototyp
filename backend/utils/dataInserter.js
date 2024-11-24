@@ -53,7 +53,7 @@ async function insertUsersFromExcel() {
 
         // Fuege Benutzer in die Tabelle ein
         await client.query(
-          `INSERT INTO sportlehrperson (name, vorname, email, password_gehashed, schul_id, needs_password_change)
+          `INSERT INTO sportlehrperson (nachname, vorname, email, password_gehashed, schul_id, needs_password_change)
            VALUES ($1, $2, $3, $4, $5, $6)`,
           [
             user.name,

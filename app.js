@@ -24,7 +24,7 @@ app.use(cors(corsOptions));
 
 app.use(express.static("./frontend"));
 
-app.use("/api/v1/auth", authRoutes); // Authentication routes (register/login)
+app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/challenges", challengeRoutes);
 app.use("/api/v1/users", userRoutes);
 

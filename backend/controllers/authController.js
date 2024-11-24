@@ -69,7 +69,6 @@ const loginUser = async (req, res) => {
 // Passwort ändern und needs_password_change-Flag entfernen
 const changePassword = async (req, res) => {
   const { email, oldPassword, newPassword, repeatPassword } = req.body;
-
   try {
     const trimmedEmail = email.trim().toLowerCase();
     const user = await pool.query(queries.getUserByEmail, [trimmedEmail]);

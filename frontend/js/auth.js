@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("Backend-URL:", window.backendUrl);
+
   // Login-Formular
   const loginForm = document.getElementById("loginForm");
 
@@ -69,6 +71,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const newPassword = newPasswordField.value;
       const repeatPassword = repeatPasswordField.value;
 
+      console.log("Formulareingaben:", {
+        email,
+        oldPassword,
+        newPassword,
+        repeatPassword,
+      });
+
       if (newPassword !== repeatPassword) {
         alert(
           "Die neuen Passwörter stimmen nicht überein. Bitte versuchen Sie es erneut."
@@ -80,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const response = await fetch(
           `${window.backendUrl}/api/v1/auth/changePassword`,
           {
-            method: "POST",
+            method: "PATCH",
             headers: {
               "Content-Type": "application/json",
             },
@@ -92,9 +101,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }),
           }
         );
-
+        console.log("Response-Status:", response.status);
         const data = await response.json();
-
+        console.log("Server-Antwort:", data);
         if (response.ok) {
           alert("Das Passwort wurde erfolgreich geändert.");
           window.location.href = "/views/login.html";
