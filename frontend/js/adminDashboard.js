@@ -130,7 +130,7 @@ async function loadActiveChallenges() {
 async function deleteChallengeById(challengeId) {
   try {
     const response = await fetch(
-      `${window.backendUrl}/api/v1/challenges/${challengeId}`,
+      `${window.backendUrl}/api/v1/challenges/${challengeId}/delete`,
       {
         method: "DELETE",
       }
