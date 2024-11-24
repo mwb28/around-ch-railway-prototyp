@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    passwordResetForm.addEventListener("submit", async (event) => {
+    passwordResetForm.addEventListener("submit-change", async (event) => {
       event.preventDefault();
 
       const email = document.getElementById("email").value;
