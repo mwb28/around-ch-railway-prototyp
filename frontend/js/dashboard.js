@@ -12,6 +12,11 @@ async function loadActiveChallenges() {
     if (!response.ok) throw new Error("Fehler beim Laden der Challenges");
 
     const challenges = await response.json();
+    if (challenges.length === 0) {
+      document.getElementById("active-challenges").textContent =
+        "Keine aktiven Challenges gefunden.";
+      return;
+    }
     const activeChallengesContainer =
       document.getElementById("active-challenges");
 
