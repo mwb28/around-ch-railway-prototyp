@@ -5,7 +5,7 @@ const {
   changePassword,
   logoutUser,
 } = require("../controllers/authController");
-const authenticateUser = require("../middleware/authenticatUser");
+const { authenticateUser } = require("../middleware/authenticatUser");
 
 //router.post("/register", registerUser);
 router.post("/login", loginUser);

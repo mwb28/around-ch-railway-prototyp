@@ -583,6 +583,7 @@ h2 {
   background-color: #f4f4f4;
 }
 .accordion {
+  display: flex;
   background-color: #f9f9f9;
   color: #444;
   cursor: pointer;
@@ -595,6 +596,9 @@ h2 {
   transition: 0.4s;
   overflow: hidden;
   word-break: break-all;
+}
+.delete-challenge-checkbox{
+  margin-right: 0.5em;
 }
 
 .active,

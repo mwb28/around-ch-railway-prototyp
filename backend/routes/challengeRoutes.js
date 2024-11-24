@@ -4,7 +4,10 @@ const {
   validateChallengeParticipation,
 } = require("../middleware/challengeValidation");
 const checkChallengeAndArchive = require("../middleware/checkAndArchiveChallenge");
-const authenticateUser = require("../middleware/authenticatUser");
+const {
+  authenticateUser,
+  authorizePermissions,
+} = require("../middleware/authenticatUser");
 const {
   getAllActiveChallenges,
   getAllActiveUserChallenges,
@@ -39,7 +42,12 @@ router.post(
 
 router.get("/archived", getAllArchivedChallenges);
 //delete route
-router.delete("/:challenge_id/delete", authenticateUser, deleteChallenge);
+router.delete(
+  "/:challenge_id/delete",
+  authenticateUser,
+  authorizePermissions("admin"),
+  deleteChallenge
+);
 // update route
 router.post("/addActivity", authenticateUser, addActivityToChallengeInstance);
 

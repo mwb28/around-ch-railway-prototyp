@@ -5,7 +5,7 @@
 
 const express = require("express");
 const router = express.Router();
-const authenticateUser = require("../middleware/authenticatUser");
+const { authenticateUser } = require("../middleware/authenticatUser");
 const {
   registerSportclass,
   userInfo,

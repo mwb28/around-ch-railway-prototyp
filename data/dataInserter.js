@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "./.env" });
 const { Pool } = require("pg");
 const bcrypt = require("bcryptjs");
 const xlsx = require("xlsx");
@@ -19,22 +19,22 @@ async function insertUsersFromExcel() {
 
   try {
     // Lese Excel-Datei
-    const filePath = path.join(__dirname, "../../data/users.xlsx");
+    const filePath = path.join(__dirname, "./users.xlsx");
     const workbook = xlsx.readFile(filePath);
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
     const userData = xlsx.utils.sheet_to_json(worksheet);
 
     // Fuege schul_id zu Benutzerdaten hinzu
-    for (const user of userData) {
-      const schulId = getSchoolIdFromEmail(user.email);
-      if (schulId === null) {
-        throw new Error(
-          `Konnte schul_id fuer Benutzer ${user.email} nicht bestimmen`
-        );
-      }
-      user.schul_id = schulId;
-    }
+    // for (const user of userData) {
+    //   const schulId = getSchoolIdFromEmail(user.email);
+    //   if (schulId === null) {
+    //     throw new Error(
+    //       `Konnte schul_id fuer Benutzer ${user.email} nicht bestimmen`
+    //     );
+    //   }
+    //   user.schul_id = schulId;
+    // }
 
     // Schreibe aktualisierte Daten zurueck in die Excel-Datei
     const updatedWorksheet = xlsx.utils.json_to_sheet(userData);
@@ -53,8 +53,8 @@ async function insertUsersFromExcel() {
 
         // Fuege Benutzer in die Tabelle ein
         await client.query(
-          `INSERT INTO sportlehrperson (nachname, vorname, email, password_gehashed, schul_id, needs_password_change)
-           VALUES ($1, $2, $3, $4, $5, $6)`,
+          `INSERT INTO sportlehrperson (nachname, vorname, email, password_gehashed, schul_id, needs_password_change, userrole)
+           VALUES ($1, $2, $3, $4, $5, $6,$7)`,
           [
             user.name,
             user.vorname,
@@ -62,6 +62,7 @@ async function insertUsersFromExcel() {
             hashedPassword,
             user.schul_id,
             user.needs_password_change,
+            user.userrole,
           ]
         );
 
