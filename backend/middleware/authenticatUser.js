@@ -26,10 +26,10 @@ const authenticateUser = async (req, res, next) => {
         .json({ message: "Nicht autorisiert: Benutzer nicht gefunden" });
     }
 
-    const { schul_id, role } = result.rows[0];
+    const { schul_id, userrole } = result.rows[0];
 
     // Benutzerinformationen im Request speichern
-    req.user = { sportl_id, schul_id, role };
+    req.user = { sportl_id, schul_id, userrole };
     next();
   } catch (error) {
     console.error("Fehler beim Überprüfen des Tokens:", error.message);
@@ -40,7 +40,7 @@ const authenticateUser = async (req, res, next) => {
 // Middleware zur Autorisierung basierend auf Benutzerrollen
 const authorizePermissions = (...roles) => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
+    if (!roles.includes(req.user.userrole)) {
       return res
         .status(403)
         .json({ message: "Nicht autorisiert: Benutzerrolle nicht erlaubt" });

@@ -133,6 +133,9 @@ async function deleteChallengeById(challengeId) {
       `${window.backendUrl}/api/v1/challenges/${challengeId}/delete`,
       {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
     );
     if (!response.ok) throw new Error("Fehler beim Löschen der Challenge");

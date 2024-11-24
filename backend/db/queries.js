@@ -11,7 +11,7 @@ const updatePasswordAndRemoveFlag = `UPDATE sportlehrperson
   WHERE email = $2`;
 const insertinvalidatedToken = `INSERT  INTO invalidated_tokens (token) 
   VALUES ($1) RETURNING *`;
-const getSchulIdFromSportlId = `SELECT schul_id, userrole 
+const getSchulIdAndRoleFromSportlId = `SELECT schul_id, userrole 
   FROM sportlehrperson 
   WHERE sportl_id = $1`;
 const getInvalidatedToken = `SELECT * 
@@ -239,7 +239,7 @@ module.exports = {
   getSportklasseId,
   notUsedSportclasses,
   deleteSportclasses,
-  getSchulIdFromSportlId,
+  getSchulIdAndRoleFromSportlId,
   insertinvalidatedToken,
   getInvalidatedToken,
   allActiveChallenges,
