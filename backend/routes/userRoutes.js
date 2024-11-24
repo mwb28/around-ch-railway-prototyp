@@ -5,10 +5,14 @@
 
 const express = require("express");
 const router = express.Router();
-const { authenticateUser } = require("../middleware/authenticatUser");
+const {
+  authenticateUser,
+  authorizePermissions,
+} = require("../middleware/authenticatUser");
 const {
   registerSportclass,
   userInfo,
+  newUser,
   checkUserStatus,
   getAllSportClasses,
   deleteSportClasses,
@@ -19,6 +23,7 @@ const {
 router.get("/authcheck", authenticateUser, checkUserStatus);
 //router.get("/infoUser, authenticateUser, getUserInfo");
 router.get("/current", authenticateUser, userInfo);
+router.post("/new", authenticateUser, authorizePermissions("admin"), newUser);
 router.get("/sportclasses", authenticateUser, getAllSportClasses);
 router.get("/unusedclasses", authenticateUser, getAllUnusedSportClasses);
 router.delete("/deleteclasses", authenticateUser, deleteSportClasses);

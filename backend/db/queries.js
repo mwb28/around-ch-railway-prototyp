@@ -1,7 +1,7 @@
 //  Authentifizierung der Sportlehrpersonen
 const registerUser = `INSERT INTO sportlehrperson 
-  (name, vorname, email, password, school) 
-  VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+  (nachname, vorname, email, password_gehashed, schul_id, needs_password_change, userrole) 
+  VALUES ($1, $2, $3, $4, $5, $6,$7) RETURNING *`;
 const getUserByEmail = `SELECT * 
 FROM sportlehrperson 
 WHERE email = $1`;

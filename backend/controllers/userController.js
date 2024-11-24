@@ -24,7 +24,34 @@ const userInfo = async (req, res) => {
     res.status(500).json({ message: "Interner Serverfehler" });
   }
 };
-
+const newUser = async (req, res) => {
+  const {
+    nachname,
+    vorname,
+    email,
+    password,
+    schul_id,
+    needs_password_change,
+    userrole,
+  } = req.body;
+  const saltRounds = 10;
+  const password_gehashed = await bcrypt.hash(password, saltRounds);
+  try {
+    const newUser = await pool.query(queries.registerUser, [
+      nachname,
+      vorname,
+      email,
+      password_gehashed,
+      schul_id,
+      needs_password_change || true,
+      userrole || "user",
+    ]);
+    res.status(201).json(newUser.rows[0]);
+  } catch (error) {
+    console.error("Fehler beim Registrieren des Benutzers:", error);
+    res.status(500).json({ message: "Interner Serverfehler" });
+  }
+};
 const checkUserStatus = (req, res) => {
   res.status(200).json({
     message: "Benutzer ist eingeloggt",
@@ -120,6 +147,7 @@ const userStatistics = async (req, res) => {
 
 module.exports = {
   userInfo,
+  newUser,
   checkUserStatus,
   registerSportclass,
   getAllSportClasses,
