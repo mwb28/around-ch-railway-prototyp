@@ -8,7 +8,7 @@ Admin und User Controller
 - integratinon von sportklasseController?
 
 */
-
+const bcrypt = require("bcryptjs");
 const pool = require("../db/connect");
 const queries = require("../db/queries");
 // get curret user info
@@ -25,6 +25,8 @@ const userInfo = async (req, res) => {
   }
 };
 const newUser = async (req, res) => {
+  const saltRounds = 10;
+
   const {
     nachname,
     vorname,
@@ -34,7 +36,6 @@ const newUser = async (req, res) => {
     needs_password_change,
     userrole,
   } = req.body;
-  const saltRounds = 10;
   const password_gehashed = await bcrypt.hash(password, saltRounds);
   try {
     const newUser = await pool.query(queries.registerUser, [
