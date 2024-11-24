@@ -339,6 +339,7 @@ h2 {
   gap: 0.5em;
   align-items: stretch;
   justify-content: space-evenly;
+  margin-left: 0.5em;
 }
 .button-container-end {
   display: flex;
@@ -405,7 +406,11 @@ h2 {
   flex-wrap: nowrap;
   gap: 0.5em;
 }
-
+.challenge-card-content-selectable h3 {
+  word-break: break-word;
+  width: 100%;
+  min-width:100px;
+}
 .class-dropdown {
   padding: 0.5em;
   border: 1px solid #ccc;
@@ -413,6 +418,7 @@ h2 {
   font-size: 1em;
   width: 100%;
   max-width: 200px;
+  min-width: 70px;
 }
 
 .participate-button {

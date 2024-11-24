@@ -124,6 +124,7 @@ async function loadStatistics() {
     console.error("Fehler beim Laden der Statistik:", error);
   }
 }
+// Sportklassen laden in Statistik
 async function loadSportClasses() {
   try {
     const response = await fetch(
@@ -221,6 +222,16 @@ async function loadSelectableChallenges() {
 
       cardContent.appendChild(classDropdown);
 
+      const buttonContainer = document.createElement("div");
+      buttonContainer.classList.add("button-container");
+
+      const showMapButton = document.createElement("button");
+      showMapButton.textContent = "Karte anzeigen";
+      showMapButton.classList.add("show-map");
+      showMapButton.onclick = () =>
+        window.open(
+          `./einzel-challenge.html?challengeId=${challenge.challenge_id}`
+        );
       // "Teilnehmen" Button erstellen
       const participateButton = document.createElement("button");
       participateButton.textContent = "Teilnehmen";
@@ -228,10 +239,12 @@ async function loadSelectableChallenges() {
       participateButton.onclick = () =>
         joinChallenge(challenge.challenge_id, classDropdown.value);
 
-      cardContent.appendChild(participateButton);
+      buttonContainer.appendChild(showMapButton);
+      buttonContainer.appendChild(participateButton);
 
       // Karte zusammenstellen
       challengeCard.appendChild(cardContent);
+      challengeCard.appendChild(buttonContainer);
       selectChallengesContainer.appendChild(challengeCard);
     });
   } catch (error) {
