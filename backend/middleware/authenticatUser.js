@@ -10,10 +10,13 @@ const authenticateUser = async (req, res, next) => {
       .status(401)
       .json({ message: "Nicht autorisiert: Kein Token bereitgestellt" });
   }
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const sportl_id = decoded.id;
-    const result = await pool.query(queries.getSchulIdFromSportlId, [
+
+    // Abfrage, um die Schul-ID und die Rolle des Benutzers zu erhalten
+    const result = await pool.query(queries.getSchulIdAndRoleFromSportlId, [
       sportl_id,
     ]);
 
@@ -22,11 +25,28 @@ const authenticateUser = async (req, res, next) => {
         .status(403)
         .json({ message: "Nicht autorisiert: Benutzer nicht gefunden" });
     }
-    req.user = { sportl_id, schul_id: result.rows[0].schul_id };
+
+    const { schul_id, role } = result.rows[0];
+
+    // Benutzerinformationen im Request speichern
+    req.user = { sportl_id, schul_id, role };
     next();
   } catch (error) {
     console.error("Fehler beim Überprüfen des Tokens:", error.message);
     res.status(403).json({ message: "Nicht autorisiert: Ungültiger Token" });
   }
 };
-module.exports = authenticateUser;
+
+// Middleware zur Autorisierung basierend auf Benutzerrollen
+const authorizePermissions = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return res
+        .status(403)
+        .json({ message: "Nicht autorisiert: Benutzerrolle nicht erlaubt" });
+    }
+    next();
+  };
+};
+
+module.exports = { authenticateUser, authorizePermissions };
