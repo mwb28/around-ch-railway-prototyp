@@ -11,7 +11,7 @@ const updatePasswordAndRemoveFlag = `UPDATE sportlehrperson
   WHERE email = $2`;
 const insertinvalidatedToken = `INSERT  INTO invalidated_tokens (token) 
   VALUES ($1) RETURNING *`;
-const getSchulIdFromSportlId = `SELECT schul_id 
+const getSchulIdFromSportlId = `SELECT schul_id, userrole 
   FROM sportlehrperson 
   WHERE sportl_id = $1`;
 const getInvalidatedToken = `SELECT * 
@@ -52,6 +52,7 @@ const allActiveChallenges = `SELECT
   c.challenge_id,
   c.startzeitpunkt,
   c.endzeitpunkt,
+  c.abgeschlossen,
   cv.challengevl_id,
   cv.name_der_challenge, 
   cv.total_meter,
@@ -212,6 +213,13 @@ WHERE
   c.abgeschlossen = true;
 `;
 const deleteChallenge = `DELETE FROM challenge WHERE challenge_id = $1`;
+const deleteOrphanedInstances = `
+    DELETE FROM klassen_challenge_instanz 
+    WHERE challenge_id IS NULL AND meter_absolviert = 0;
+
+    DELETE FROM sportlicheleistung 
+    WHERE instanz_id IS NULL;
+`;
 const getUserStatistics = `SELECT
     SUM(sl.meter) AS totalmeter,
     SUM(sl.dauer) AS totaldauer
@@ -250,5 +258,6 @@ module.exports = {
   createInstanceOfChallenge,
   challengeQuery,
   getUserStatistics,
+  deleteOrphanedInstances,
   checkAndArchiveChallenge,
 };
