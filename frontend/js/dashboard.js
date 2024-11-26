@@ -242,7 +242,7 @@ async function loadSelectableChallenges() {
         window.open(
           `./einzel-challenge.html?challengeId=${challenge.challenge_id}`
         );
-      // "Teilnehmen" Button erstellen
+
       const participateButton = document.createElement("button");
       participateButton.textContent = "Teilnehmen";
       participateButton.classList.add("participate-button");
@@ -252,7 +252,6 @@ async function loadSelectableChallenges() {
       buttonContainer.appendChild(showMapButton);
       buttonContainer.appendChild(participateButton);
 
-      // Karte zusammenstellen
       challengeCard.appendChild(cardContent);
       challengeCard.appendChild(buttonContainer);
       selectChallengesContainer.appendChild(challengeCard);

@@ -1,3 +1,4 @@
+// Zweck: Generiert ein zufälliges Token mit einer bestimmten Länge, noch nicht umgesetzt..
 const crypto = require("crypto");
 
 function generateRandomToken(length) {

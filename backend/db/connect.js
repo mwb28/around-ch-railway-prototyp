@@ -2,7 +2,7 @@
 const { Pool } = require("pg");
 require("dotenv").config();
 
-// Verbindung zur Datenbank über die connectionString-Umgebungsvariable
+// Verbindung zur Datenbank über die Umgebungsvariable
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {

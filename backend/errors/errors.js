@@ -1,3 +1,7 @@
+/* noch nicht umgesetzt..
+angedacht sind folgende errors
+*/
+
 class BadRequestError extends Error {
   constructor(message) {
     super(message);
