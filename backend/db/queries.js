@@ -164,8 +164,8 @@ const createInstanceOfChallenge = `INSERT INTO klassen_challenge_instanz
 
 //Akitivitaeten
 const addActivity = `INSERT INTO sportlicheleistung 
-      (meter, uhrzeit, datum, dauer, anzahl_m, anzahl_w, anzahl_d, instanz_id) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)RETURNING *`;
+      (sportart, meter, uhrzeit, datum, dauer, anzahl_m, anzahl_w, anzahl_d, instanz_id) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)RETURNING *`;
 // const addChallengeEnemy =
 //   "INSERT INTO nimmtteilan (sportkl_id, challenge_id, gegner_sportkl_id) VALUES ($1, $2, $3)";
 const updateChallengeInstance =

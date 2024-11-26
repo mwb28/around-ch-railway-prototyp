@@ -192,6 +192,7 @@ const createInstanceOfChallenge = async (req, res) => {
 // Füge eine Aktivität zu einer Herausforderungsinstance hinzu
 const addActivityToChallengeInstance = async (req, res) => {
   const {
+    sportart = "Laufen",
     meter,
     uhrzeit,
     datum,
@@ -207,6 +208,7 @@ const addActivityToChallengeInstance = async (req, res) => {
 
     // Aktivität hinzufügen
     await pool.query(queries.addActivity, [
+      sportart,
       meter,
       uhrzeit,
       datum,

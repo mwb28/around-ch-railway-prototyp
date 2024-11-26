@@ -86,6 +86,7 @@ CREATE TABLE IF NOT EXISTS klassen_challenge_instanz (
 -- Tabelle "Sportliche Leistung"
 CREATE TABLE IF NOT EXISTS sportlicheleistung (
     zaehler_id SERIAL PRIMARY KEY,
+    sportart VARCHAR(100) DEFAULT 'Laufen' NOT NULL,
     meter INT NOT NULL,
     uhrzeit TIME DEFAULT NOW(),
     datum DATE NOT NULL,
