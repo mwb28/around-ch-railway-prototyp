@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS sportlehrperson (
 -- Tabelle "Sportklasse"
 CREATE TABLE IF NOT EXISTS sportklasse (
     sportkl_id SERIAL PRIMARY KEY, 
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(10) NOT NULL,
     jahrgang INT NOT NULL,
     sportl_id INT,
      schul_id INT,

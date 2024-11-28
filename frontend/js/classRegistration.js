@@ -1,8 +1,8 @@
 async function submitRegistration() {
   const form = document.getElementById("registrationForm");
-
-  const name = form.className.value.trim();
+  let name = form.classDesc.value.trim();
   const jahrgang = parseInt(form.classYear.value, 10);
+  name = name.replace(/\s+/g, " ").trim();
 
   if (name === "" || isNaN(jahrgang)) {
     alert("Bitte füllen Sie alle Felder aus.");

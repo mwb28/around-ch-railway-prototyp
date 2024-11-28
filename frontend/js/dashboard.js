@@ -409,9 +409,25 @@ async function createChallenge(
   endTime,
   selectedClass
 ) {
+  if (!startDate || !startTime || !endDate || !endTime) {
+    alert("Bitte fülle alle Felder aus.");
+    return;
+  }
+  if (startDate > endDate) {
+    alert("Startdatum muss vor dem Enddatum liegen");
+    return;
+  }
+  if (endDate > new Date()) {
+    alert("Enddatum muss in der Zukunft liegen");
+    return;
+  }
   const startDateTime = `${startDate}T${startTime}`;
   const endDateTime = `${endDate}T${endTime}`;
 
+  if (new Date(endDateTime) < new Date(startDateTime)) {
+    alert("Endzeitpunkt muss nach dem Startzeitpunkt liegen");
+    return;
+  }
   const challengeData = {
     startzeitpunkt: new Date(startDateTime).toISOString(),
     endzeitpunkt: new Date(endDateTime).toISOString(),
