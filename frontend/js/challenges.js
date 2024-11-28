@@ -137,10 +137,10 @@ async function loadChallenges(showAll = false) {
         L.marker([newPoint[1] + latOffset, newPoint[0] + lngOffset], {
           icon: L.divIcon({
             className: "custom-marker",
-            html: `<div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%;"></div>
-                    <span style="margin-left: 12px; font-size: 18px; font-weight: bold; color: ${color};">${
+            html: `<div style="background-color:${color};width:14px;height:14px;border-radius:50%;"></div>
+              <span style="margin-left:12px;font-size:18px;font-weight:bold;color:${color};">${(
               participant.sportklasse || "Unbekannt"
-            }</span>`,
+            ).replace(/\s+/g, "")}</span>`,
           }),
         }).addTo(map);
       });
