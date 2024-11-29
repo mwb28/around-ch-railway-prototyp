@@ -560,6 +560,12 @@ function generateClassTable(classes) {
       `;
 
   classes.forEach((klass) => {
+    if (klass.status === "in_progess") {
+      statusdef = "Zeit abgelaufen";
+    } else {
+      statusdef = "Beendet";
+    }
+
     tableHTML += `
           <tr>
             <td>${klass.klasse_name || "Unbekannt"}</td>

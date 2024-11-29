@@ -88,12 +88,18 @@ function generateClassTable(classes) {
       `;
 
   classes.forEach((klass) => {
+    let statusdef;
+    if (klass.status === "in_progress") {
+      statusdef = "Zeit abgelaufen";
+    } else {
+      statusdef = "Beendet";
+    }
     tableHTML += `
           <tr>
             <td>${klass.klasse_name || "Unbekannt"}</td>
             <td>${klass.schulname || "Unbekannt"}</td>
             <td>${klass.meter_absolviert || "0"} m</td>
-            <td>${klass.status || "Unbekannt"}</td>
+            <td>${statusdef}</td>
           </tr>
         `;
   });
