@@ -185,6 +185,17 @@ const checkAndArchiveChallenge = `
           c.endzeitpunkt <= NOW()
         )
 `;
+const updateInstanceStatus = `UPDATE klassen_challenge_instanz kci
+      SET status = 'failed'
+      WHERE kci.status = 'in_progress'
+        AND EXISTS (
+          SELECT 1
+          FROM challenge c
+          WHERE c.challenge_id = kci.challenge_id
+            AND c.endzeitpunkt <= NOW()
+        );
+    `;
+
 const allArchivedChallenges = ` SELECT 
 c.challenge_id,
 c.startzeitpunkt,
@@ -237,7 +248,8 @@ LEFT JOIN
 JOIN schule s 
     ON sk.schul_id = s.schul_id 
 WHERE 
-  c.abgeschlossen = true
+  kci.status = 'completed'
+  OR c.abgeschlossen = true
   AND sk.sportl_id = $1;
 `;
 
@@ -290,4 +302,5 @@ module.exports = {
   getUserStatistics,
   deleteOrphanedInstances,
   checkAndArchiveChallenge,
+  updateInstanceStatus,
 };

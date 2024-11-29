@@ -42,11 +42,7 @@ router.post(
 );
 
 router.get("/archived", getAllArchivedChallenges);
-router.get(
-  "/archived/user",
-  authenticateUser,
-  getAllArchivedChallengesFromUser
-);
+router.get("/archivedUser", authenticateUser, getAllArchivedChallengesFromUser);
 //delete route
 router.delete(
   "/:challenge_id/delete",

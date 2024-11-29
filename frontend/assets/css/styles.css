@@ -311,7 +311,14 @@ h2 {
   padding: 1em;
   flex: 2;
 }
-
+.archived-user-challenges{
+  width: 100%;
+  padding: 1em;
+  margin-top: 2em;
+}
+.hidden {
+  display: none;
+}
 .user-challenges {
   flex: 2;
   padding: 1em;
@@ -350,8 +357,10 @@ h2 {
   flex-direction: column;
   gap: 0.5em;
   align-items: stretch;
+  max-width: 300px;
   justify-content: space-evenly;
   margin-left: 0.5em;
+  margin-bottom: 0.5em;
 }
 .button-container-end {
   display: flex;

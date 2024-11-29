@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS challenge (
 CREATE TABLE IF NOT EXISTS klassen_challenge_instanz (
     instanz_id SERIAL PRIMARY KEY,
     meter_absolviert INT DEFAULT 0,
-    status VARCHAR(50) DEFAULT 'in_progress' CHECK (status IN ('in_progress', 'completed')),
+    status VARCHAR(50) DEFAULT 'in_progress' CHECK (status IN ('in_progress', 'completed', 'failed')),
     sportkl_id INT,
     challenge_id INT,
     FOREIGN KEY (sportkl_id) REFERENCES sportklasse(sportkl_id) ON DELETE SET NULL ON UPDATE CASCADE,

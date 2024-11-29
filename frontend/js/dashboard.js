@@ -456,9 +456,124 @@ async function createChallenge(
     console.error("Fehler beim Erstellen der Challenge:", error);
   }
 }
+let challengesLoaded = false;
 
-// function joinChallenge(challengeId, selectedClass) {
-//   console.log(
-//     `Teilnahme an Challenge mit ID ${challengeId} für Klasse ${selectedClass}`
-//   );
-// }
+async function toggleArchivedUserChallenges() {
+  const archiveCardContainer = document.getElementById(
+    "archived-user-challenges-card"
+  );
+
+  // Toggle die Anzeige des Containers
+  if (archiveCardContainer.classList.contains("hidden")) {
+    archiveCardContainer.classList.remove("hidden");
+
+    // Lade die Challenges nur beim ersten Öffnen
+    if (!challengesLoaded) {
+      await loadArchivedChallenges();
+      challengesLoaded = true;
+    }
+  } else {
+    archiveCardContainer.classList.add("hidden");
+  }
+}
+
+async function loadArchivedChallenges() {
+  const archiveChallengeCards = document.getElementById(
+    "archiveUserChallengeCards"
+  );
+
+  try {
+    // Abrufen der archivierten Challenges
+    const response = await fetch(
+      `${window.backendUrl}/api/v1/challenges/archivedUser`
+    );
+    if (!response.ok) {
+      throw new Error("Fehler beim Abrufen der archivierten Challenges.");
+    }
+
+    const challenges = await response.json();
+
+    // Challenges rendern
+    renderArchivedChallenges(challenges);
+  } catch (error) {
+    console.error("Fehler beim Laden der archivierten Challenges:", error);
+    archiveChallengeCards.innerHTML = `<p class="error-message">Fehler beim Laden der archivierten Challenges.</p>`;
+  }
+}
+
+function renderArchivedChallenges(challenges) {
+  const archiveChallengeCards = document.getElementById(
+    "archiveUserChallengeCards"
+  );
+
+  if (!challenges || challenges.length === 0) {
+    archiveChallengeCards.innerHTML = `<p class="no-challenges-message">Keine archivierten Challenges gefunden.</p>`;
+    return;
+  }
+
+  challenges.forEach((challenge) => {
+    const {
+      challenge_id,
+      name_der_challenge,
+      total_meter,
+      image_url,
+      teilnehmende_klassen,
+    } = challenge;
+
+    // Container für eine einzelne Challenge
+    const card = document.createElement("div");
+    card.className = "archive-challenge-card";
+
+    // HTML-Inhalt der Challenge
+    card.innerHTML = `
+          <div class="archive-challenge-card-content">
+            
+            <div class="archive-challenge-details">
+              <h3 class="challenge-name">${name_der_challenge} Nr. ${challenge_id}</h3>
+              <p class="challenge-total-meter">Gesamtstrecke: ${total_meter} Meter</p>
+              ${generateClassTable(teilnehmende_klassen)}
+            </div>
+          </div>
+        `;
+
+    archiveChallengeCards.appendChild(card);
+  });
+}
+
+function generateClassTable(classes) {
+  if (!classes || classes.length === 0) {
+    return "<p class='no-classes-message'>Keine teilnehmenden Klassen gefunden.</p>";
+  }
+
+  // Tabellen-HTML erzeugen
+  let tableHTML = `
+        <table class="archive-class-table">
+          <thead>
+            <tr>
+              <th>Klasse</th>
+              <th>Schule</th>
+              <th>Zurückgelegte Meter</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+  classes.forEach((klass) => {
+    tableHTML += `
+          <tr>
+            <td>${klass.klasse_name || "Unbekannt"}</td>
+            <td>${klass.schulname || "Unbekannt"}</td>
+            <td>${klass.meter_absolviert || "0"} m</td>
+            <td>${klass.status || "Unbekannt"}</td>
+          </tr>
+        `;
+  });
+
+  tableHTML += `
+          </tbody>
+        </table>
+      `;
+
+  return tableHTML;
+}
