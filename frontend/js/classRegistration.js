@@ -8,8 +8,12 @@ async function submitRegistration() {
     alert("Bitte füllen Sie alle Felder aus.");
     return;
   }
+  if (name.length < 1 || name.length > 6) {
+    alert("Der Name der Sportklasse muss zwischen 1 und 6 Zeichen lang sein.");
+    return;
+  }
 
-  if (jahrgang < 1900 || jahrgang > 2100) {
+  if (jahrgang < 1920 || jahrgang > new Date().getFullYear() - 4) {
     alert("Bitte geben Sie eine gültige Jahreszahl ein.");
     return;
   }

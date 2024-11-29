@@ -134,7 +134,10 @@ async function initializeMap(challenge, challengeId) {
     participants.forEach((participant, index) => {
       const participantName = participant.name || `Teilnehmer ${index + 1}`;
       const color = colors[index % colors.length];
-      const sportklasse = participant.sportklasse || "Unbekannt";
+      const sportklasse = (participant.sportklasse || "Unbekannt").replace(
+        /\s+/g,
+        ""
+      );
 
       // Initialisieren des Teilnehmers mit einem Marker, inkl. Sportklasse und Name im Label
       participantMarkers[participantName] = {

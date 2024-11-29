@@ -63,7 +63,8 @@ async function submitActivity() {
     );
 
     if (response.ok) {
-      alert("Aktivität erfolgreich gesendet!");
+      const result = await response.json();
+      alert(result.message);
       form.reset();
       window.location.href = "./dashboard.html";
     } else {

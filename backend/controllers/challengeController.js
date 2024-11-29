@@ -230,10 +230,15 @@ const addActivityToChallengeInstance = async (req, res) => {
     }
 
     await pool.query("COMMIT");
-
-    res
-      .status(201)
-      .json({ message: "Aktivität hinzugefügt und Challenge aktualisiert" });
+    if (meter_absolviert >= total_meter) {
+      res.status(201).json({
+        message: `Aktivität hinzugefügt und Challenge abgeschlossen, Gratulation! Die Challenge wird automatisch archiviert.`,
+      });
+    } else {
+      res
+        .status(201)
+        .json({ message: `Aktivität hinzugefügt und Challenge aktualisiert` });
+    }
   } catch (error) {
     await pool.query("ROLLBACK");
     console.error("Fehler beim Hinzufügen der Aktivität oder Challenge:", {
@@ -311,6 +316,55 @@ const getAllArchivedChallenges = async (req, res) => {
     res.status(500).json({ message: "Interner Serverfehler" });
   }
 };
+const getAllArchivedChallengesFromUser = async (req, res) => {
+  const { sportl_id } = req.user;
+  try {
+    // Datenbankabfrage ausführen
+    const challenges = await pool.query(queries.allArchivedChallengesFromUser, [
+      sportl_id,
+    ]);
+
+    const rows = challenges.rows;
+
+    // Gruppierung und Verbindung der Daten
+    const formattedChallenges = rows.reduce((acc, row) => {
+      // Überprüfen, ob die Challenge bereits in der Liste ist
+      let challenge = acc.find((c) => c.challenge_id === row.challenge_id);
+      if (!challenge) {
+        // Challenge hinzufügen, wenn sie noch nicht existiert
+        challenge = {
+          challenge_id: row.challenge_id,
+          startzeitpunkt: row.startzeitpunkt,
+          endzeitpunkt: row.endzeitpunkt,
+          abgeschlossen: row.abgeschlossen,
+          challengevl_id: row.challengevl_id,
+          name_der_challenge: row.name_der_challenge,
+          total_meter: row.total_meter,
+          image_url: generateImageUrl(row.name_der_challenge),
+          teilnehmende_klassen: [],
+        };
+        acc.push(challenge);
+      }
+
+      // Klasse zur Challenge hinzufügen
+      challenge.teilnehmende_klassen.push({
+        klassen_instanz_id: row.instanz_id,
+        sportkl_id: row.sportkl_id,
+        klasse_name: row.klasse_name,
+        schulname: row.schulname,
+        meter_absolviert: row.meter_absolviert,
+        status: row.status,
+      });
+
+      return acc;
+    }, []);
+
+    res.status(200).json(formattedChallenges);
+  } catch (error) {
+    console.error("Fehler beim Abrufen der archivierten Challenges:", error);
+    res.status(500).json({ message: "Interner Serverfehler" });
+  }
+};
 
 module.exports = {
   getAllActiveChallenges,
@@ -323,4 +377,5 @@ module.exports = {
   getAllArchivedChallenges,
   deleteChallenge,
   addActivityToChallengeInstance,
+  getAllArchivedChallengesFromUser,
 };

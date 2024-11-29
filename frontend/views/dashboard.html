@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de"></html>
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,53 +15,76 @@
           <a href="../index.html"
             ><img src="../assets/images/logo_small.png" alt="Logo" class="logo"
           /></a>
-        </div> <span id="usernameDisplay" style="margin-right: 10px"></span>
-        <a href="./views/login.html" class="login-button" id="loginButton" style="text-decoration: none">Einloggen</a>
-       
+        </div>
+        <span id="usernameDisplay" style="margin-right: 10px"></span>
+        <a
+          href="./views/login.html"
+          class="login-button"
+          id="loginButton"
+          style="text-decoration: none"
+          >Einloggen</a
+        >
       </header>
 
       <main>
-        <section class = "active-stats-challenges-section"> 
-          <div class = "all-active-challenges">
+        <section class="active-stats-challenges-section">
+          <div class="all-active-challenges">
             <h2>Meine aktiven Challenges</h2>
-         
-          <div id="active-challenges" class="active-challenges"></div>
+
+            <div id="active-challenges" class="active-challenges"></div>
+            <div class="archived-user-challenges" id="archived-user-challenges">
+              <button
+                class="dash-archive-challenges-button"
+                onClick="loadArchivedChallenges()"
+              >
+                archivierte Challenges
+              </button>
+            </div>
           </div>
-         
-        <div class="stats">
-          <h2>Meine Statistik</h2>
-          <div class=" stats-details">
-          <p>Total absolvierte Kilometer: <span id="totalKm"></span></p>
-          <p>Total absolvierte Stunden: <span id="totalHours"></span></p>
-          <div id="all-sportclasses" class="all-sportclasses"><p>Meine Sportklasse(n):</p> <div id="mySportClasses"></div>
-        </div>
-          <div class=" button-container">
-            <a href="../views/register-sportklasse.html" class="button register-class">Neue Sportklasse registrieren</a>
-            <a href="../views/loesche-sportklasse.html" class="button delete-class">Sportklasse löschen</a>
-        </div>
+
+          <div class="stats">
+            <h2>Meine Statistik</h2>
+            <div class="stats-details">
+              <p>Total absolvierte Kilometer: <span id="totalKm"></span></p>
+              <p>Total absolvierte Stunden: <span id="totalHours"></span></p>
+              <div id="all-sportclasses" class="all-sportclasses">
+                <p>Meine Sportklasse(n):</p>
+                <div id="mySportClasses"></div>
+              </div>
+            </div>
+            <div class="button-container">
+              <a
+                href="../views/register-sportklasse.html"
+                class="button register-class"
+                >Neue Sportklasse registrieren</a
+              >
+              <a
+                href="../views/loesche-sportklasse.html"
+                class="button delete-class"
+                >Sportklasse löschen</a
+              >
+            </div>
           </div>
         </section>
 
         <section class="manage-challenges-section">
-        <div class="select-challenges-section">
-          <h2>Challenges Auswählen</h2>
-          <div id="select-challenges" class="select-challenges"></div>
-      
-        </div>
+          <div class="select-challenges-section">
+            <h2>Challenges Auswählen</h2>
+            <div id="select-challenges" class="select-challenges"></div>
+          </div>
 
-      
-        <div class="create-challenge-section">
-          <h2>Neue Challenge erstellen</h2>
-          <div id="create-challenges" class="create-challenges"></div>
-        </div>
-      </section>
+          <div class="create-challenge-section">
+            <h2>Neue Challenge erstellen</h2>
+            <div id="create-challenges" class="create-challenges"></div>
+          </div>
+        </section>
       </main>
 
       <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-      <script src="../js/dashboard.js"></script>
+      <script type="module" src="../js/dashboard.js"></script>
       <script src="../js/auth.js"></script>
       <script src="../js/scrollPostition.js"></script>
-     
+      <script src="../js/archivedChallenges.js"></script>
     </div>
   </body>
 </html>

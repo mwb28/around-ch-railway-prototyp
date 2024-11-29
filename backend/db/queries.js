@@ -212,6 +212,35 @@ JOIN schule s
 WHERE 
   c.abgeschlossen = true;
 `;
+const allArchivedChallengesFromUser = `SELECT
+c.challenge_id,
+c.startzeitpunkt,
+c.endzeitpunkt,
+c.abgeschlossen,
+c.challengevl_id,
+cv.name_der_challenge,
+cv.total_meter,
+kci.instanz_id,
+kci.meter_absolviert,
+kci.status,
+kci.sportkl_id,
+sk.name AS klasse_name,
+s.schulname
+FROM 
+challenge c
+JOIN 
+  klassen_challenge_instanz kci ON c.challenge_id = kci.challenge_id
+JOIN 
+  challenge_vorlage cv ON c.challengevl_id = cv.challengevl_id
+LEFT JOIN 
+  sportklasse sk ON kci.sportkl_id = sk.sportkl_id
+JOIN schule s 
+    ON sk.schul_id = s.schul_id 
+WHERE 
+  c.abgeschlossen = true
+  AND sk.sportl_id = $1;
+`;
+
 const deleteChallenge = `DELETE FROM challenge WHERE challenge_id = $1`;
 const deleteOrphanedInstances = `
     DELETE FROM klassen_challenge_instanz 
@@ -254,6 +283,7 @@ module.exports = {
   checkClassParticipation,
   updateChallengeInstance,
   allArchivedChallenges,
+  allArchivedChallengesFromUser,
   deleteChallenge,
   createInstanceOfChallenge,
   challengeQuery,
