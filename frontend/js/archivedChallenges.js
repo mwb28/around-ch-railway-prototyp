@@ -56,7 +56,7 @@ function renderArchivedChallenges(challenges) {
               <img src="${image_url}" alt="${name_der_challenge}" />
             </div>
             <div class="archive-challenge-details">
-              <h3 class="challenge-name">${name_der_challenge}</h3>
+              <h3 class="challenge-name">${name_der_challenge} Nr. ${challenge_id}</h3>
               <p class="challenge-total-meter">Gesamtstrecke: ${total_meter} Meter</p>
               ${generateClassTable(teilnehmende_klassen)}
             </div>
