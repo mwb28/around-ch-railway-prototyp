@@ -22,12 +22,11 @@ const userRoutes = require("./backend/routes/userRoutes");
 app.use(express.json());
 app.use(cookieParser());
 app.use(xss());
-app.use(
-  rateLimiter({
-    windowMs: 15 * 60 * 1000,
-    max: 60,
-  })
-);
+const limiter = rateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
+app.use("/api/", limiter);
 
 const corsOptions = {
   origin: "https://around-ch-railway-prototyp-production.up.railway.app",

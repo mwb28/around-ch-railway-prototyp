@@ -268,7 +268,7 @@ async function joinChallenge(challengeId, classId) {
     alert("Bitte wähle eine gültige Klasse und Challenge aus.");
     return;
   }
-
+  spinner.show();
   try {
     const response = await fetch(
       `${window.backendUrl}/api/v1/challenges/createInstance`,
@@ -299,6 +299,8 @@ async function joinChallenge(challengeId, classId) {
   } catch (error) {
     console.error("Fehler beim Registrieren der Challenge-Teilnahme:", error);
     alert("Ein Fehler ist aufgetreten. Bitte versuche es später erneut.");
+  } finally {
+    spinner.hide();
   }
 }
 // Neue challenges erstellen
@@ -434,7 +436,7 @@ async function createChallenge(
     challengevl_id: templateId,
     sportkl_id: selectedClass,
   };
-
+  spinner.show();
   try {
     const response = await fetch(
       `${window.backendUrl}/api/v1/challenges/create`,
@@ -454,6 +456,8 @@ async function createChallenge(
     await loadSelectableChallenges();
   } catch (error) {
     console.error("Fehler beim Erstellen der Challenge:", error);
+  } finally {
+    spinner.hide();
   }
 }
 let challengesLoaded = false;
