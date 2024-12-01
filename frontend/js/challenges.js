@@ -115,7 +115,7 @@ async function loadChallenges(showAll = false) {
           newIndex++;
         }
 
-        const offsetFactor = 0.0002;
+        const offsetFactor = 0.0008;
         const offsetIndex = index;
         const offsetDirection = offsetIndex % 2 === 0 ? 1 : -1;
         const latOffset = offsetDirection * offsetIndex * offsetFactor;
@@ -130,7 +130,10 @@ async function loadChallenges(showAll = false) {
             coordinates[i + 1][1] + latOffset,
             coordinates[i + 1][0] + lngOffset,
           ];
-          L.polyline([previousLatLng, newLatLng], { color: color }).addTo(map);
+          L.polyline([previousLatLng, newLatLng], {
+            color: color,
+            weight: 1,
+          }).addTo(map);
         }
 
         const newPoint = coordinates[newIndex];
