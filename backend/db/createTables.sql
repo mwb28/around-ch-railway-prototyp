@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS sportlehrperson (
 -- Tabelle "Sportklasse"
 CREATE TABLE IF NOT EXISTS sportklasse (
     sportkl_id SERIAL PRIMARY KEY, 
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(10) NOT NULL,
     jahrgang INT NOT NULL,
     sportl_id INT,
      schul_id INT,
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS challenge (
 CREATE TABLE IF NOT EXISTS klassen_challenge_instanz (
     instanz_id SERIAL PRIMARY KEY,
     meter_absolviert INT DEFAULT 0,
-    status VARCHAR(50) DEFAULT 'in_progress' CHECK (status IN ('in_progress', 'completed')),
+    status VARCHAR(50) DEFAULT 'in_progress' CHECK (status IN ('in_progress', 'completed', 'failed')),
     sportkl_id INT,
     challenge_id INT,
     FOREIGN KEY (sportkl_id) REFERENCES sportklasse(sportkl_id) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -86,6 +86,7 @@ CREATE TABLE IF NOT EXISTS klassen_challenge_instanz (
 -- Tabelle "Sportliche Leistung"
 CREATE TABLE IF NOT EXISTS sportlicheleistung (
     zaehler_id SERIAL PRIMARY KEY,
+    sportart VARCHAR(100) DEFAULT 'Laufen' NOT NULL,
     meter INT NOT NULL,
     uhrzeit TIME DEFAULT NOW(),
     datum DATE NOT NULL,

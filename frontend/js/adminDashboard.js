@@ -36,14 +36,12 @@ async function loadActiveChallenges() {
           challenge.abgeschlossen
       );
 
-      // Text zum Button hinzufügen
       accordionButton.appendChild(buttonText);
 
       // Panel erstellen
       const panel = document.createElement("div");
       panel.classList.add("panel");
 
-      // Challenge-Details erstellen
       const description1 = document.createElement("p");
       description1.textContent =
         "Startzeitpunkt: " +
@@ -54,7 +52,6 @@ async function loadActiveChallenges() {
         "Endzeitpunkt: " +
         new Date(challenge.endzeitpunkt).toLocaleString("de-CH");
 
-      // Challenge-Instanzen auflisten - Instanzencontainer erstellen
       const instancesContainer = document.createElement("div");
       instancesContainer.classList.add("instances-container");
 
@@ -63,7 +60,6 @@ async function loadActiveChallenges() {
       panel.appendChild(description2);
       panel.appendChild(instancesContainer);
 
-      // Button zum Löschen der Challenge erstellen
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "Löschen";
       deleteButton.classList.add("delete-button");

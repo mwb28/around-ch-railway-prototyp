@@ -115,7 +115,7 @@ async function loadChallenges(showAll = false) {
           newIndex++;
         }
 
-        const offsetFactor = 0.0002;
+        const offsetFactor = 0.0008;
         const offsetIndex = index;
         const offsetDirection = offsetIndex % 2 === 0 ? 1 : -1;
         const latOffset = offsetDirection * offsetIndex * offsetFactor;
@@ -130,17 +130,20 @@ async function loadChallenges(showAll = false) {
             coordinates[i + 1][1] + latOffset,
             coordinates[i + 1][0] + lngOffset,
           ];
-          L.polyline([previousLatLng, newLatLng], { color: color }).addTo(map);
+          L.polyline([previousLatLng, newLatLng], {
+            color: color,
+            weight: 1,
+          }).addTo(map);
         }
 
         const newPoint = coordinates[newIndex];
         L.marker([newPoint[1] + latOffset, newPoint[0] + lngOffset], {
           icon: L.divIcon({
             className: "custom-marker",
-            html: `<div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%;"></div>
-                    <span style="margin-left: 12px; font-size: 18px; font-weight: bold; color: ${color};">${
+            html: `<div style="background-color:${color};width:14px;height:14px;border-radius:50%;"></div>
+              <span style="margin-left:12px;font-size:18px;font-weight:bold;color:${color};">${(
               participant.sportklasse || "Unbekannt"
-            }</span>`,
+            ).replace(/\s+/g, "")}</span>`,
           }),
         }).addTo(map);
       });

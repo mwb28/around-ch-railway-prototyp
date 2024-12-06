@@ -56,7 +56,7 @@ function renderArchivedChallenges(challenges) {
               <img src="${image_url}" alt="${name_der_challenge}" />
             </div>
             <div class="archive-challenge-details">
-              <h3 class="challenge-name">${name_der_challenge}</h3>
+              <h3 class="challenge-name">${name_der_challenge} Nr. ${challenge_id}</h3>
               <p class="challenge-total-meter">Gesamtstrecke: ${total_meter} Meter</p>
               ${generateClassTable(teilnehmende_klassen)}
             </div>
@@ -88,12 +88,18 @@ function generateClassTable(classes) {
       `;
 
   classes.forEach((klass) => {
+    let statusdef;
+    if (klass.status === "in_progress") {
+      statusdef = "Zeit abgelaufen";
+    } else {
+      statusdef = "Beendet";
+    }
     tableHTML += `
           <tr>
             <td>${klass.klasse_name || "Unbekannt"}</td>
             <td>${klass.schulname || "Unbekannt"}</td>
             <td>${klass.meter_absolviert || "0"} m</td>
-            <td>${klass.status || "Unbekannt"}</td>
+            <td>${statusdef}</td>
           </tr>
         `;
   });

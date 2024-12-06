@@ -242,7 +242,7 @@ async function loadSelectableChallenges() {
         window.open(
           `./einzel-challenge.html?challengeId=${challenge.challenge_id}`
         );
-      // "Teilnehmen" Button erstellen
+
       const participateButton = document.createElement("button");
       participateButton.textContent = "Teilnehmen";
       participateButton.classList.add("participate-button");
@@ -252,7 +252,6 @@ async function loadSelectableChallenges() {
       buttonContainer.appendChild(showMapButton);
       buttonContainer.appendChild(participateButton);
 
-      // Karte zusammenstellen
       challengeCard.appendChild(cardContent);
       challengeCard.appendChild(buttonContainer);
       selectChallengesContainer.appendChild(challengeCard);
@@ -269,7 +268,7 @@ async function joinChallenge(challengeId, classId) {
     alert("Bitte wähle eine gültige Klasse und Challenge aus.");
     return;
   }
-
+  spinner.show();
   try {
     const response = await fetch(
       `${window.backendUrl}/api/v1/challenges/createInstance`,
@@ -300,6 +299,8 @@ async function joinChallenge(challengeId, classId) {
   } catch (error) {
     console.error("Fehler beim Registrieren der Challenge-Teilnahme:", error);
     alert("Ein Fehler ist aufgetreten. Bitte versuche es später erneut.");
+  } finally {
+    spinner.hide();
   }
 }
 // Neue challenges erstellen
@@ -410,16 +411,32 @@ async function createChallenge(
   endTime,
   selectedClass
 ) {
+  if (!startDate || !startTime || !endDate || !endTime) {
+    alert("Bitte fülle alle Felder aus.");
+    return;
+  }
+  if (startDate > endDate) {
+    alert("Startdatum muss vor dem Enddatum liegen");
+    return;
+  }
+  if (endDate > new Date()) {
+    alert("Enddatum muss in der Zukunft liegen");
+    return;
+  }
   const startDateTime = `${startDate}T${startTime}`;
   const endDateTime = `${endDate}T${endTime}`;
 
+  if (new Date(endDateTime) < new Date(startDateTime)) {
+    alert("Endzeitpunkt muss nach dem Startzeitpunkt liegen");
+    return;
+  }
   const challengeData = {
     startzeitpunkt: new Date(startDateTime).toISOString(),
     endzeitpunkt: new Date(endDateTime).toISOString(),
     challengevl_id: templateId,
     sportkl_id: selectedClass,
   };
-
+  spinner.show();
   try {
     const response = await fetch(
       `${window.backendUrl}/api/v1/challenges/create`,
@@ -439,11 +456,134 @@ async function createChallenge(
     await loadSelectableChallenges();
   } catch (error) {
     console.error("Fehler beim Erstellen der Challenge:", error);
+  } finally {
+    spinner.hide();
+  }
+}
+let challengesLoaded = false;
+
+async function toggleArchivedUserChallenges() {
+  const archiveCardContainer = document.getElementById(
+    "archived-user-challenges-card"
+  );
+
+  // Toggle die Anzeige des Containers
+  if (archiveCardContainer.classList.contains("hidden")) {
+    archiveCardContainer.classList.remove("hidden");
+
+    // Lade die Challenges nur beim ersten Öffnen
+    if (!challengesLoaded) {
+      await loadArchivedChallenges();
+      challengesLoaded = true;
+    }
+  } else {
+    archiveCardContainer.classList.add("hidden");
   }
 }
 
-// function joinChallenge(challengeId, selectedClass) {
-//   console.log(
-//     `Teilnahme an Challenge mit ID ${challengeId} für Klasse ${selectedClass}`
-//   );
-// }
+async function loadArchivedChallenges() {
+  const archiveChallengeCards = document.getElementById(
+    "archiveUserChallengeCards"
+  );
+
+  try {
+    // Abrufen der archivierten Challenges
+    const response = await fetch(
+      `${window.backendUrl}/api/v1/challenges/archivedUser`
+    );
+    if (!response.ok) {
+      throw new Error("Fehler beim Abrufen der archivierten Challenges.");
+    }
+
+    const challenges = await response.json();
+
+    // Challenges rendern
+    renderArchivedChallenges(challenges);
+  } catch (error) {
+    console.error("Fehler beim Laden der archivierten Challenges:", error);
+    archiveChallengeCards.innerHTML = `<p class="error-message">Fehler beim Laden der archivierten Challenges.</p>`;
+  }
+}
+
+function renderArchivedChallenges(challenges) {
+  const archiveChallengeCards = document.getElementById(
+    "archiveUserChallengeCards"
+  );
+
+  if (!challenges || challenges.length === 0) {
+    archiveChallengeCards.innerHTML = `<p class="no-challenges-message">Keine archivierten Challenges gefunden.</p>`;
+    return;
+  }
+
+  challenges.forEach((challenge) => {
+    const {
+      challenge_id,
+      name_der_challenge,
+      total_meter,
+      image_url,
+      teilnehmende_klassen,
+    } = challenge;
+
+    // Container für eine einzelne Challenge
+    const card = document.createElement("div");
+    card.className = "archive-challenge-card";
+
+    // HTML-Inhalt der Challenge
+    card.innerHTML = `
+          <div class="archive-challenge-card-content">
+            
+            <div class="archive-challenge-details">
+              <h3 class="challenge-name">${name_der_challenge} Nr. ${challenge_id}</h3>
+              <p class="challenge-total-meter">Gesamtstrecke: ${total_meter} Meter</p>
+              ${generateClassTable(teilnehmende_klassen)}
+            </div>
+          </div>
+        `;
+
+    archiveChallengeCards.appendChild(card);
+  });
+}
+
+function generateClassTable(classes) {
+  if (!classes || classes.length === 0) {
+    return "<p class='no-classes-message'>Keine teilnehmenden Klassen gefunden.</p>";
+  }
+
+  // Tabellen-HTML erzeugen
+  let tableHTML = `
+        <table class="archive-class-table">
+          <thead>
+            <tr>
+              <th>Klasse</th>
+              <th>Schule</th>
+              <th>Zurückgelegte Meter</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+  classes.forEach((klass) => {
+    let statusdef;
+    if (klass.status === "in_progress") {
+      statusdef = "Zeit abgelaufen";
+    } else {
+      statusdef = "Beendet";
+    }
+    tableHTML += `
+          <tr>
+            <td>${klass.klasse_name || "Unbekannt"}</td>
+            <td>${klass.schulname || "Unbekannt"}</td>
+            <td>${klass.meter_absolviert || "0"} m</td>
+            <td>${statusdef || "Unbekannt"}</td>
+          </tr>
+        `;
+  });
+
+  tableHTML += `
+          </tbody>
+        </table>
+      `;
+
+  return tableHTML;
+}

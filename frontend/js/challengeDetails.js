@@ -31,7 +31,7 @@ async function loadChallengeDetail() {
     // Challenge-Route und Teilnehmerdaten kombinieren
     const challengeData = { ...challengeDetails, participants };
 
-    renderChallengeDetail(participants); // Anzeige der Teilnehmer
+    renderChallengeDetail(participants);
     initializeMap(challengeData, challengeId); // Karte initialisieren mit Challenge-Daten
   } catch (error) {
     console.error("Fehler beim Laden der Challenge-Daten:", error);
@@ -134,7 +134,10 @@ async function initializeMap(challenge, challengeId) {
     participants.forEach((participant, index) => {
       const participantName = participant.name || `Teilnehmer ${index + 1}`;
       const color = colors[index % colors.length];
-      const sportklasse = participant.sportklasse || "Unbekannt"; // Sportklasse hinzufügen
+      const sportklasse = (participant.sportklasse || "Unbekannt").replace(
+        /\s+/g,
+        ""
+      );
 
       // Initialisieren des Teilnehmers mit einem Marker, inkl. Sportklasse und Name im Label
       participantMarkers[participantName] = {
@@ -177,7 +180,7 @@ async function initializeMap(challenge, challengeId) {
       }
 
       // Linie für den Fortschritt des Teilnehmers zeichnen
-      const offsetFactor = 0.0002; // Leichter Versatz, um Überlappungen zu vermeiden
+      const offsetFactor = 0.0008;
       const offsetIndex = index;
       const offsetDirection = offsetIndex % 2 === 0 ? 1 : -1;
       const latOffset = offsetDirection * offsetIndex * offsetFactor;
@@ -193,7 +196,10 @@ async function initializeMap(challenge, challengeId) {
           coordinates[i + 1][1] + latOffset,
           coordinates[i + 1][0] + lngOffset,
         ];
-        L.polyline([previousLatLng, newLatLng], { color: color }).addTo(map);
+        L.polyline([previousLatLng, newLatLng], {
+          color: color,
+          weight: 1,
+        }).addTo(map);
       }
 
       // Marker des Teilnehmers auf die neue Position setzen

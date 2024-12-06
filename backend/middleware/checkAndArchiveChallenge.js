@@ -3,10 +3,15 @@ const queries = require("../db/queries");
 
 const checkChallengeAndArchive = async (req, res, next) => {
   try {
-    const result = await pool.query(queries.checkAndArchiveChallenge);
+    // const result = await pool.query(queries.updateInstanceStatus);
+    // if (result.rowCount > 0) {
+    //   console.log(`${result.rowCount} Instanzen aktualisiert.`);
+    // }
 
-    if (result.rowCount > 0) {
-      console.log(`${result.rowCount} Challenges archiviert.`);
+    const result2 = await pool.query(queries.checkAndArchiveChallenge);
+
+    if (result2.rowCount > 0) {
+      console.log(`${result2.rowCount} Challenges archiviert.`);
     }
 
     next(); // Weiter zur Route

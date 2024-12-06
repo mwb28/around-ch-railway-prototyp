@@ -1,3 +1,5 @@
+/* wird vorläfig im Fontend direkt validiert!*/
+
 const { check, validationResult } = require("express-validator");
 
 const validateRegister = [
