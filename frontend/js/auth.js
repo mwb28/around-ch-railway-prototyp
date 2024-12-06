@@ -49,10 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const passwordResetForm = document.getElementById("pwResetForm");
 
   if (passwordResetForm) {
-    const showPasswordCheckbox = document.getElementById("showPassword");
-    const oldPasswordField = document.getElementById("oldPassword");
-    const newPasswordField = document.getElementById("newPassword");
-    const repeatPasswordField = document.getElementById("repeatPassword");
+    const showPasswordCheckbox = document.getElementById("showpassword");
+    const oldPasswordField = document.getElementById("oldpassword");
+    const newPasswordField = document.getElementById("newpassword");
+    const repeatPasswordField = document.getElementById("repeatpassword");
 
     if (showPasswordCheckbox) {
       showPasswordCheckbox.addEventListener("change", () => {
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    passwordResetForm.addEventListener("submit-change", async (event) => {
+    passwordResetForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       const email = document.getElementById("email").value;

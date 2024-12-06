@@ -73,6 +73,7 @@ h2 {
 [type="checkbox"] {
   display: flex;
   vertical-align: middle;
+  margin-right: 0.5em;
 }
 
 
@@ -94,6 +95,18 @@ h2 {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+.input-group-showpw{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.input-group-showpw label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
 }
 .button {
   background-color: #102c47;
