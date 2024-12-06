@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const password = document.getElementById("password").value;
 
       try {
+        spinner.show();
         const response = await fetch(`${window.backendUrl}/api/v1/auth/login`, {
           method: "POST",
           headers: {
@@ -28,8 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "/views/change-password.html";
           } else {
             // Speichere Login-Status und Benutzername
-            localStorage.setItem("isLoggedIn", "true");
-            localStorage.setItem("username", data.username); // Speichere den Benutzernamen
+            sessionStorage.setItem("isLoggedIn", "true");
+            sessionStorage.setItem("username", data.username); // Speichere den Benutzernamen
             alert(data.message);
             window.location.href = "/views/dashboard.html";
           }
@@ -41,6 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(
           "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut."
         );
+      } finally {
+        spinner.hide();
       }
     });
   }
@@ -84,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
         return;
       }
-
+      spinner.show();
       try {
         const response = await fetch(
           `${window.backendUrl}/api/v1/auth/changePassword`,
@@ -115,6 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(
           "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut."
         );
+      } finally {
+        spinner.hide();
       }
     });
   }
@@ -124,8 +129,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const usernameDisplay = document.getElementById("usernameDisplay");
 
   function updateLoginStatus() {
-    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    const username = localStorage.getItem("username");
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+    const username = sessionStorage.getItem("username");
 
     if (loginButton && usernameDisplay) {
       if (isLoggedIn && username) {
@@ -151,9 +156,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (response.ok) {
-        // Entferne den Login-Status aus dem localStorage
-        localStorage.removeItem("isLoggedIn");
-        localStorage.removeItem("username");
+        // Entferne den Login-Status aus dem sessionStorage
+        sessionStorage.removeItem("isLoggedIn");
+        sessionStorage.removeItem("username");
 
         localStorage.setItem("logout-event", Date.now());
 
@@ -182,6 +187,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.key === "logout-event") {
       // Der Benutzer hat sich in einem anderen Tab ausgeloggt
       console.log("Logout-Event in anderem Tab erkannt.");
+      sessionStorage.removeItem("isLoggedIn");
+      sessionStorage.removeItem("username");
+
       localStorage.removeItem("isLoggedIn");
       localStorage.removeItem("username");
       updateLoginStatus();
@@ -194,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Dashboard-Button aktualisieren
   const dashboardButton = document.getElementById("dashboardButton");
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
   if (dashboardButton) {
     if (isLoggedIn) {
       dashboardButton.href = "../views/dashboard.html";
