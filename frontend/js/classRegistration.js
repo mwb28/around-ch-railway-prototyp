@@ -22,7 +22,7 @@ async function submitRegistration() {
     name: name,
     jahrgang: jahrgang,
   };
-
+  spinner.show();
   try {
     const response = await fetch(
       `${window.backendUrl}/api/v1/users/registersportclass`,
@@ -45,5 +45,7 @@ async function submitRegistration() {
   } catch (error) {
     console.error("Fehler:", error);
     alert("Ein Fehler ist aufgetreten.");
+  } finally {
+    spinner.hide();
   }
 }

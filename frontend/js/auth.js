@@ -5,6 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
 
   if (loginForm) {
+    const showPasswordCheckbox = document.getElementById("showpassword");
+    const passwordField = document.getElementById("password");
+
+    if (showPasswordCheckbox) {
+      showPasswordCheckbox.addEventListener("change", () => {
+        const passwordType = showPasswordCheckbox.checked ? "text" : "password";
+        passwordField.type = passwordType;
+      });
+    }
     loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
@@ -148,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function logout() {
+    spinner.show();
     try {
       // Sende eine Anfrage an den Server, um das Token ungültig zu machen und den Cookie zu löschen
       const response = await fetch(`${window.backendUrl}/api/v1/auth/logout`, {
@@ -180,6 +190,8 @@ document.addEventListener("DOMContentLoaded", () => {
       alert(
         "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut."
       );
+    } finally {
+      spinner.hide();
     }
   }
 

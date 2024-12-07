@@ -49,7 +49,7 @@ async function submitActivity() {
     anzahl_d: form.diverse_count.value,
     instanz_id: instanceId,
   };
-
+  spinner.show();
   try {
     const response = await fetch(
       `${window.backendUrl}/api/v1/challenges/addActivity`,
@@ -73,5 +73,7 @@ async function submitActivity() {
   } catch (error) {
     console.error("Fehler:", error);
     alert("Ein Fehler ist aufgetreten.");
+  } finally {
+    spinner.hide();
   }
 }

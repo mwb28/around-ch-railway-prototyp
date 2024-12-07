@@ -193,6 +193,10 @@ async function loadSelectableChallenges() {
         challenge.image_path || "../assets/images/default.jpg";
       challengeImage.alt = challenge.name;
       challengeImage.classList.add("challenge-image-selectable");
+      challengeImage.onclick = () =>
+        window.open(
+          `./einzel-challenge.html?challengeId=${challenge.challenge_id}`
+        );
       challengeCard.appendChild(challengeImage);
 
       // Inhalt der Karte hinzufügen
@@ -419,7 +423,7 @@ async function createChallenge(
     alert("Startdatum muss vor dem Enddatum liegen");
     return;
   }
-  if (endDate > new Date()) {
+  if (new Date(endDate) < new Date()) {
     alert("Enddatum muss in der Zukunft liegen");
     return;
   }

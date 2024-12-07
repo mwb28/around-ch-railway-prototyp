@@ -93,7 +93,7 @@ h2 {
   border-radius: 5px;
 }
 
-.input-group-showpw{
+.input-group-showpw {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -426,6 +426,7 @@ h2 {
   height: 100px;
   object-fit: cover;
   margin-right: 1em;
+  cursor: pointer;
 }
 
 .challenge-card-content-selectable {
@@ -651,8 +652,8 @@ h2 {
   border-radius: 50%;
   border-top: 16px solid #3b8ad3;
   border-bottom: 16px solid #3b8ad3;
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }

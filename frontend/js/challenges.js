@@ -30,7 +30,8 @@ async function loadChallenges(showAll = false) {
       const cardContent = document.createElement("div");
       cardContent.classList.add("card-content");
       const title = document.createElement("h3");
-      title.textContent = challenge.name_der_challenge;
+      title.textContent =
+        challenge.name_der_challenge + " Nr. " + challenge.challenge_id;
       const description1 = document.createElement("p");
       description1.textContent = challenge.description;
       const description2 = document.createElement("p");

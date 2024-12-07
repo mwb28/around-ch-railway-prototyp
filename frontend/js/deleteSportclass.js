@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       alert("Bitte wähle mindestens eine Sportklasse aus.");
       return;
     }
-
+    spinner.show();
     try {
       const response = await fetch(
         `${window.backendUrl}/api/v1/users/deleteclasses`,
@@ -67,6 +67,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     } catch (error) {
       alert("Ein Fehler ist aufgetreten.");
+    } finally {
+      spinner.hide();
     }
   });
 

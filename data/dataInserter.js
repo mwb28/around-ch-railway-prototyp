@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "./.env" });
+require("dotenv").config({ path: "../.env" });
 const { Pool } = require("pg");
 const bcrypt = require("bcryptjs");
 const xlsx = require("xlsx");
@@ -132,4 +132,4 @@ const schoolIdMapping = {
 };
 
 // Exportiere die Funktion
-module.exports = insertUsersFromExcel;
+insertUsersFromExcel();

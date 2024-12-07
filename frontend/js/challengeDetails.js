@@ -31,7 +31,7 @@ async function loadChallengeDetail() {
     // Challenge-Route und Teilnehmerdaten kombinieren
     const challengeData = { ...challengeDetails, participants };
 
-    renderChallengeDetail(participants);
+    renderChallengeDetail(participants, challengeId);
     initializeMap(challengeData, challengeId); // Karte initialisieren mit Challenge-Daten
   } catch (error) {
     console.error("Fehler beim Laden der Challenge-Daten:", error);
@@ -40,13 +40,13 @@ async function loadChallengeDetail() {
   }
 }
 // Tabelle mit Teilnehmerdaten rendern
-function renderChallengeDetail(participants) {
+function renderChallengeDetail(participants, challengeId) {
   const challengeDetails = document.querySelector(".challenge-details");
   challengeDetails.innerHTML = "";
 
   if (Array.isArray(participants) && participants.length > 0) {
     const challengeName = participants[0].name_der_challenge || "Challenge";
-    challengeDetails.innerHTML = `<h3>${challengeName}</h3>`;
+    challengeDetails.innerHTML = `<h3>${challengeName} Nr. ${challengeId}</h3>`;
 
     let tableHTML = `
                       <table class="challenge-table">
@@ -132,7 +132,8 @@ async function initializeMap(challenge, challengeId) {
     const participantMarkers = {};
 
     participants.forEach((participant, index) => {
-      const participantName = participant.name || `Teilnehmer ${index + 1}`;
+      const participantName =
+        participant.name || `Teilnehmer ${participant.sportklasse}`;
       const color = colors[index % colors.length];
       const sportklasse = (participant.sportklasse || "Unbekannt").replace(
         /\s+/g,
@@ -198,7 +199,7 @@ async function initializeMap(challenge, challengeId) {
         ];
         L.polyline([previousLatLng, newLatLng], {
           color: color,
-          weight: 1,
+          weight: 2,
         }).addTo(map);
       }
 
