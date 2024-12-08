@@ -19,7 +19,7 @@ body {
 
 header {
   display: flex;
-  padding: 1em 2em;
+  padding: 1em 3em 1em 3em;
   background-color: #d6eae1;
   justify-content: center;
   align-items: center;
@@ -309,7 +309,7 @@ h2 {
 }
 
 .active-stats-challenges-section {
-  padding: 1em;
+  padding: 1em 3em 1em 3em;
   background-color: #d6eae1;
   display: flex;
   justify-content: space-between;
@@ -318,7 +318,7 @@ h2 {
   align-items: flex-start;
 }
 .all-active-challenges {
-  padding: 1em;
+  padding-right: 1em;
   flex: 2;
 }
 .archived-user-challenges {
@@ -334,7 +334,6 @@ h2 {
 }
 .stats {
   flex: 1;
-  padding: 1em;
 }
 .stats-details {
   max-width: 100%;
@@ -395,7 +394,7 @@ h2 {
 /* manage challenge- container style */
 
 .manage-challenges-section {
-  padding: 1em;
+  padding: 2em;
   background-color: #ffffff;
   display: flex;
   justify-content: space-between;
