@@ -129,45 +129,15 @@ async function initializeMap(challenge, challengeId) {
     const participants = challenge.participants;
     const colors = ["red", "green", "black", "orange", "purple"];
 
-    const participantMarkers = {};
+    // Teilnehmerdaten auf der Karte anzeigen
 
     participants.forEach((participant, index) => {
-      const participantName =
-        participant.name || `Teilnehmer ${participant.sportklasse}`;
       const color = colors[index % colors.length];
-      const sportklasse = (participant.sportklasse || "Unbekannt").replace(
-        /\s+/g,
-        ""
-      );
-
-      // Initialisieren des Teilnehmers mit einem Marker, inkl. Sportklasse und Name im Label
-      participantMarkers[participantName] = {
-        currentIndex: 0,
-        color: color,
-        marker: L.marker([coordinates[0][1], coordinates[0][0]], {
-          title: participantName,
-          icon: L.divIcon({
-            className: "custom-marker",
-            html: `
-              
-                <div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%;"></div>
-                
-                <span style="margin-left: 12px; font-size: 18px; font-weight: bold; color: ${color};">
-                  ${sportklasse}
-                </span>
-              </div>`,
-          }),
-        }).addTo(map),
-      };
-
       const distanceCovered = participant.meter_absolviert;
-
-      // Fortschritt des Teilnehmers entlang der Route berechnen
-      let traveledDistance = 0;
-      let newIndex = 0;
-
       const progressDistance =
         (distanceCovered / challenge.total_meter) * totalLength;
+      let traveledDistance = 0;
+      let newIndex = 0;
 
       while (
         traveledDistance < progressDistance &&
@@ -180,14 +150,12 @@ async function initializeMap(challenge, challengeId) {
         newIndex++;
       }
 
-      // Linie für den Fortschritt des Teilnehmers zeichnen
       const offsetFactor = 0.0008;
       const offsetIndex = index;
       const offsetDirection = offsetIndex % 2 === 0 ? 1 : -1;
       const latOffset = offsetDirection * offsetIndex * offsetFactor;
       const lngOffset = offsetDirection * offsetIndex * offsetFactor;
 
-      // Liniensegment vom Start bis zur aktuellen Position des Teilnehmers zeichnen
       for (let i = 0; i < newIndex; i++) {
         const previousLatLng = [
           coordinates[i][1] + latOffset,
@@ -199,17 +167,22 @@ async function initializeMap(challenge, challengeId) {
         ];
         L.polyline([previousLatLng, newLatLng], {
           color: color,
-          weight: 2,
+          weight: 1,
         }).addTo(map);
       }
 
-      // Marker des Teilnehmers auf die neue Position setzen
-      participantMarkers[participantName].currentIndex = newIndex;
       const newPoint = coordinates[newIndex];
-      participantMarkers[participantName].marker.setLatLng([
-        newPoint[1] + latOffset,
-        newPoint[0] + lngOffset,
-      ]);
+      L.marker([newPoint[1] + latOffset, newPoint[0] + lngOffset], {
+        icon: L.divIcon({
+          className: "custom-marker",
+          html: `<div style="background-color:${color};width:14px;height:14px;border-radius:50%;"></div>
+            <span style="margin-left:12px;font-size:18px;font-weight:bold;color:${color};">${(
+            participant.sportklasse || "Unbekannt"
+          ).replace(/\s+/g, "")}</span>`,
+        }),
+      })
+        .addTo(map)
+        .bindPopup(`${participant.schule || "Unbekannt"}`);
     });
   } else {
     console.warn(

@@ -146,7 +146,9 @@ async function loadChallenges(showAll = false) {
               participant.sportklasse || "Unbekannt"
             ).replace(/\s+/g, "")}</span>`,
           }),
-        }).addTo(map);
+        })
+          .addTo(map)
+          .bindPopup(`${participant.schule || "Unbekannt"}`);
       });
     });
   } catch (error) {

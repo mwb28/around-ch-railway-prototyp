@@ -61,7 +61,6 @@ async function submitActivity() {
         body: JSON.stringify(data),
       }
     );
-
     if (response.ok) {
       const result = await response.json();
       alert(result.message);
