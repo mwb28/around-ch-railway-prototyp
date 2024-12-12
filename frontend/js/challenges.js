@@ -148,7 +148,11 @@ async function loadChallenges(showAll = false) {
           }),
         })
           .addTo(map)
-          .bindPopup(`${participant.schule || "Unbekannt"}`);
+          .bindPopup(
+            `${participant.schule || "Unbekannt"} (${
+              participant.meter_absolviert / 1000
+            } km)`
+          );
       });
     });
   } catch (error) {

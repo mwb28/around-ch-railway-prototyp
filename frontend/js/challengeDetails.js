@@ -182,7 +182,11 @@ async function initializeMap(challenge, challengeId) {
         }),
       })
         .addTo(map)
-        .bindPopup(`${participant.schule || "Unbekannt"}`);
+        .bindPopup(
+          `${participant.schule || "Unbekannt"} (${
+            participant.meter_absolviert / 1000
+          } km)`
+        );
     });
   } else {
     console.warn(
