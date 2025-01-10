@@ -1,4 +1,5 @@
 /*
+Notizen:
  getAllChallengesPublic: Alle aktiven Herausforderungen abrufen, nur Ansicht
   getSingleChallengePuplic, Eine aktive Herausforderung abrufen, nur Ansicht
   createChallenge, Eine neue Herausforderung erstellen, nur Auswahl, keine eigene Herausforderung erstellen
@@ -202,7 +203,7 @@ const addActivityToChallengeInstance = async (req, res) => {
     anzahl_d,
     instanz_id,
   } = req.body;
-
+  // Fehlerbehandlung noch nicht implementiert
   try {
     await pool.query("BEGIN");
 
