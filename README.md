@@ -1,1 +1,1 @@
-This is a Repo for testing my App with railway
+This is a repo for testing my app with railway.app.
