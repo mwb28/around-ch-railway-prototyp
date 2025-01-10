@@ -116,7 +116,7 @@ async function loadChallenges(showAll = false) {
           newIndex++;
         }
 
-        const offsetFactor = 0.0008;
+        const offsetFactor = 0.0004;
         const offsetIndex = index;
         const offsetDirection = offsetIndex % 2 === 0 ? 1 : -1;
         const latOffset = offsetDirection * offsetIndex * offsetFactor;
