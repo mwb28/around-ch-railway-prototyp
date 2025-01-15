@@ -123,8 +123,8 @@ async function initializeMap(challenge, challengeId) {
     const totalPoints = coordinates.length;
 
     // GeoJSON-Linie erstellen und Gesamtlänge der Route berechnen
-    const totalLength = challenge.total_meter;
-    console.log("Gesamtlänge der Route:", totalLength);
+    // const totalLength = challenge.total_meter;
+    // console.log("Gesamtlänge der Route:", totalLength);
 
     const participants = challenge.participants;
     const colors = ["red", "green", "black", "orange", "purple"];
