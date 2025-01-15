@@ -95,18 +95,15 @@ async function loadChallenges(showAll = false) {
       const coordinates =
         challenge.geojson_daten.features[0].geometry.coordinates;
       const totalPoints = coordinates.length;
-      const totalLength = challenge.total_meter;
 
       participants.forEach((participant, index) => {
         const color = colors[index % colors.length];
         const distanceCovered = participant.meter_absolviert;
-        const progressDistance =
-          (distanceCovered / challenge.total_meter) * totalLength;
         let traveledDistance = 0;
         let newIndex = 0;
 
         while (
-          traveledDistance < progressDistance &&
+          traveledDistance < distanceCovered &&
           newIndex < totalPoints - 1
         ) {
           const from = turf.point(coordinates[newIndex]);

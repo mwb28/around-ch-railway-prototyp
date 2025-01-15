@@ -134,15 +134,10 @@ async function initializeMap(challenge, challengeId) {
     participants.forEach((participant, index) => {
       const color = colors[index % colors.length];
       const distanceCovered = participant.meter_absolviert;
-      const progressDistance =
-        (distanceCovered / challenge.total_meter) * totalLength;
       let traveledDistance = 0;
       let newIndex = 0;
 
-      while (
-        traveledDistance < progressDistance &&
-        newIndex < totalPoints - 1
-      ) {
+      while (traveledDistance < distanceCovered && newIndex < totalPoints - 1) {
         const from = turf.point(coordinates[newIndex]);
         const to = turf.point(coordinates[newIndex + 1]);
         const segmentDistance = turf.distance(from, to, { units: "meters" });
