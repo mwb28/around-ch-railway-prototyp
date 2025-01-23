@@ -38,7 +38,7 @@ const getAllActiveUserChallenges = async (req, res) => {
   const { sportl_id } = req.user;
 
   try {
-    challenges = await pool.query(queries.allUserChallenges, [sportl_id]);
+    const challenges = await pool.query(queries.allUserChallenges, [sportl_id]);
 
     const challengesImage = challenges.rows.map((challenge) => {
       const formattedName = challenge.name_der_challenge.toLowerCase();
