@@ -248,8 +248,8 @@ LEFT JOIN
 JOIN schule s 
     ON sk.schul_id = s.schul_id 
 WHERE 
-  kci.status = 'completed'
-  OR c.abgeschlossen = true
+  (kci.status = 'completed'
+  OR c.abgeschlossen = true)
   AND sk.sportl_id = $1;
 `;
 
